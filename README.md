@@ -7,3 +7,7 @@ BIGOWL.owl contains the following features:
 1.	A semantic approach to represent and consolidate BIG DATA workflows is proposed.
 2.	An OWL Ontology and SWRL rules are developed for reasoning tasks in BIG DATA.
 3.	The proposal is validated with real-world knowledge workflows base of BIG DATA.
+
+## WebProtégé
+BIGOWL.owl is available on  WebProtégé
+https://goo.gl/F6fYUc
