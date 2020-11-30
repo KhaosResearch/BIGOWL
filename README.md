@@ -1,4 +1,4 @@
-# BIGOWL.owl: An ontology to support knowledge management in Big Data analytics
+# BIGOWL: An ontology to support knowledge management in Big Data analytics
 
 [![Explore ontology](https://img.shields.io/badge/explore-WebVOWL-orange.svg?style=flat-square)](www.visualdataweb.de/webvowl/#iri=https://raw.githubusercontent.com/KhaosResearch/BIGOWL/master/BIGOWL.owl)
 
