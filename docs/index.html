@@ -1,0 +1,3657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>BIGOWL</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    
+    <style>
+        #pylode {
+            position: fixed;
+            top: 130px;
+            left: -60px;
+            font-size: small;
+            transform: rotate(-90deg);
+            color: grey;
+        }
+        #pylode a {
+            font-size: 2em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #005A9C;
+        }
+        #pylode a:hover {
+            color: #333;
+        }
+
+        .cardinality {
+            font-style: italic;
+            color: #aa00aa;
+        }
+
+        dt {
+            font-weight: bold;
+            padding: 5px 0 5px 0;
+        }
+
+        ul.hlist {
+            list-style-type: none;
+            border: 1px solid navy;
+            padding:5px;
+            background-color: #F4FFFF;
+        }
+
+        ul.hierarchy {
+            border: 1px solid navy;
+            padding: 5px 25px 5px 25px;
+            background-color: #F4FFFF;
+        }
+
+
+        ul.hlist li {
+            display: inline;
+            margin-right: 10px;
+        }
+
+        .entity {
+            border: 1px solid navy;
+            margin:5px 0 5px 0;
+            padding: 5px;
+        }
+
+        .entity th {
+            width: 150px;
+            vertical-align: top;
+        }
+
+        .entity th,
+        .entity td {
+            padding-bottom: 20px;
+        }
+
+        .entity table th {
+            text-align: left;
+        }
+
+        section#overview img {
+            max-width: 1000px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            text-align: left
+        }
+        h1, h2, h3 {
+            color: #005A9C; background: white
+        }
+        h1 {
+            font: 170% sans-serif;
+            line-height: 110%;
+        }
+        h2 {
+            font: 140% sans-serif;
+            margin-top:40px;
+        }
+        h3 {
+            font: 120% sans-serif;
+            margin-top: 3px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid navy;
+        }
+        h4 { font: bold 100% sans-serif }
+        h5 { font: italic 100% sans-serif }
+        h6 { font: small-caps 100% sans-serif }
+
+
+        body {
+            padding: 2em 70px 2em 70px;
+            margin: 0;
+            font-family: sans-serif;
+            color: black;
+            background: white;
+            background-position: top left;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            text-align: justify;
+        }
+
+        section {
+            max-width: 1500px;
+        }
+
+        .figure {
+            margin-bottom: 20px;
+        }
+
+        :link { color: #00C; background: transparent }
+        :visited { color: #609; background: transparent }
+        a:active { color: #C00; background: transparent }
+
+        .sup-c,
+        .sup-op,
+        .sup-fp,
+        .sup-dp,
+        .sup-ap,
+        .sup-p,
+        .sup-ni,
+        .sup-cp,
+        .sup-cl {
+            cursor:help;
+            margin-left: 3px;
+        }
+
+        .sup-c {
+            color:orange;
+        }
+
+        .sup-op {
+            color:navy;
+        }
+
+        .sup-fp {
+            color:lightskyblue;
+        }
+
+        .sup-dp {
+            color:green;
+        }
+
+        .sup-ap {
+            color:darkred;
+        }
+
+        .sup-p {
+            color:black;
+        }
+
+        .sup-ni {
+            color:brown;
+        }
+
+        .sup-cp {
+            color:orange;
+        }
+
+        .sup-cl {
+            color:darkred;
+        }
+
+        code {
+            font-size: large;
+            color: darkred;
+        }
+
+        /* less prominent links for properties */
+        .proplink {
+            color: #336;
+            text-decoration: none;
+        }
+    </style>
+    
+    <script type="application/ld+json">
+      [
+  {
+    "@id": "http://www.ontologies.khaos.uma.es/bigowl/",
+    "@type": [
+      "https://schema.org/DefinedTermSet"
+    ],
+    "https://schema.org/codeRepository": [
+      {
+        "@id": "https://github.com/KhaosResearch/BIGOWL"
+      }
+    ],
+    "https://schema.org/description": [
+      {
+        "@value": "<p>An ontology to support knowledge management in Big Data analytics graphs</p>"
+      }
+    ],
+    "https://schema.org/name": [
+      {
+        "@value": "BIGOWL"
+      }
+    ],
+    "https://schema.org/rights": [
+      {
+        "@value": "&copy; Khaos Research Group, University of Málaga"
+      }
+    ]
+  }
+]
+    </script>
+</head>
+<body>
+  <div id="pylode">made by <a href="http://github.com/rdflib/pyLODE">
+    <span style="color:#329545;">p</span><span style="color:#f9cb33;">y</span>LODE</a>
+    <span style="font-size:smaller;">2.8.4</span>
+  </div>
+  <h1>BIGOWL</h1>
+<section id="metadata">
+    <h2 style="display:none;">Metadata</h2>
+    <dl>
+        <dt>URI</dt>
+        <dd><code>http://www.ontologies.khaos.uma.es/bigowl/</code></dd>
+        <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/publisher">Publisher</a>(s)</dt>
+        <dd>
+            Khaos Research Group<br/>
+        </dd>
+        <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/creator">Creator</a>(s)</dt>
+        <dd>
+            
+    <a href="https://orcid.org/0000-0002-8764-5076">Cristóbal Barba-González</a>
+    <a href="https://orcid.org/0000-0002-8764-5076"><svg width="15px" height="15px" viewBox="0 0 72 72" version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Orcid logo</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="hero" transform="translate(-924.000000, -72.000000)" fill-rule="nonzero">
+            <g id="Group-4">
+                <g id="vector_iD_icon" transform="translate(924.000000, 72.000000)">
+                    <path d="M72,36 C72,55.884375 55.884375,72 36,72 C16.115625,72 0,55.884375 0,36 C0,16.115625 16.115625,0 36,0 C55.884375,0 72,16.115625 72,36 Z" id="Path" fill="#A6CE39"></path>
+                    <g id="Group" transform="translate(18.868966, 12.910345)" fill="#FFFFFF">
+                        <polygon id="Path" points="5.03734929 39.1250878 0.695429861 39.1250878 0.695429861 9.14431787 5.03734929 9.14431787 5.03734929 22.6930505 5.03734929 39.1250878"></polygon>
+                        <path d="M11.409257,9.14431787 L23.1380784,9.14431787 C34.303014,9.14431787 39.2088191,17.0664074 39.2088191,24.1486995 C39.2088191,31.846843 33.1470485,39.1530811 23.1944669,39.1530811 L11.409257,39.1530811 L11.409257,9.14431787 Z M15.7511765,35.2620194 L22.6587756,35.2620194 C32.49858,35.2620194 34.7541226,27.8438084 34.7541226,24.1486995 C34.7541226,18.1301509 30.8915059,13.0353795 22.4332213,13.0353795 L15.7511765,13.0353795 L15.7511765,35.2620194 Z" id="Shape"></path>
+                        <path d="M5.71401206,2.90182329 C5.71401206,4.441452 4.44526937,5.72914146 2.86638958,5.72914146 C1.28750978,5.72914146 0.0187670918,4.441452 0.0187670918,2.90182329 C0.0187670918,1.33420133 1.28750978,0.0745051096 2.86638958,0.0745051096 C4.44526937,0.0745051096 5.71401206,1.36219458 5.71401206,2.90182329 Z" id="Path"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg></a>
+    (<a href="mailto:cbarba@lcc.uma.es">cbarba@lcc.uma.es</a>) of 
+    <a href="https://www.uma.es/">University of Málaga</a><br/>
+        </dd>
+        <dt><a class="proplink" href="https://www.dublincore.org/specifications/dublin-core/dcmi-terms/#http://purl.org/dc/terms/modified">Modified</a></dt>
+        <dd>2020-11-30T23:59:59</dd>
+        <dt>Version Information</dt>
+        <dd>V6</dd>
+        <dt>Rights</dt>
+        <dd>&copy; Khaos Research Group, University of Málaga</dd>
+        <dt>Ontology RDF</dt>
+        <dd><a href="bigowl.owl">RDF (xml)</a></dd>
+        <dt>Code Repository</dt>
+        <dd><a href="https://github.com/KhaosResearch/BIGOWL">https://github.com/KhaosResearch/BIGOWL</a></dd>
+    </dl>
+    <h2>Description</h2>
+    <div id="description">
+        <p>An ontology to support knowledge management in Big Data analytics graphs</p>
+    </div>
+</section>
+<section id="toc">
+    <h2>Table of Contents</h2>
+    <ol>
+        <li><a href="#classes">Classes</a></li>
+        <li><a href="#objectproperties">Object Properties</a></li>
+        <li><a href="#datatypeproperties">Datatype Properties</a></li>
+        <li><a href="#namedindividuals">Named Individuals</a></li>
+        <li><a href="#namespaces">Namespaces</a></li>
+        <li><a href="#legend">Legend</a></li>
+    </ol>
+</section>
+<section id="overview">
+    <h2>Overview</h2>
+    <div class="figure">
+        <div style="width:500px; height:50px; background-color: lightgrey; border:solid 2px grey; padding:10px;margin-bottom:5px; text-align:center;">Pictures say 1,000 words</div>
+        <div class="caption"><strong>Figure 1:</strong> Ontology overview</div>
+    </div>
+</section>
+  <section id="classes">
+    <h2>Classes <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#Agent">Agent</a></li>
+        <li><a href="#Algorithm">Algorithm</a></li>
+        <li><a href="#Bin">Bin</a></li>
+        <li><a href="#Cell">Cell</a></li>
+        <li><a href="#Channel">Channel</a></li>
+        <li><a href="#ClassificationMetric">ClassificationMetric</a></li>
+        <li><a href="#ClassificationModel">ClassificationModel</a></li>
+        <li><a href="#ClassificationModelingAlgorithm">ClassificationModelingAlgorithm</a></li>
+        <li><a href="#ClassificationPredictingAlgorithm">ClassificationPredictingAlgorithm</a></li>
+        <li><a href="#ClassificationTestingAlgorithm">ClassificationTestingAlgorithm</a></li>
+        <li><a href="#Column">Column</a></li>
+        <li><a href="#Component">Component</a></li>
+        <li><a href="#ConvNetLSTM">ConvNetLSTM</a></li>
+        <li><a href="#ConvNetLSTMPredict">ConvNetLSTMPredict</a></li>
+        <li><a href="#ConvNetLSTMTesting">ConvNetLSTMTesting</a></li>
+        <li><a href="#DM-Model">DM-Model</a></li>
+        <li><a href="#DTC">DTC</a></li>
+        <li><a href="#DTCPredict">DTCPredict</a></li>
+        <li><a href="#DTCTesting">DTCTesting</a></li>
+        <li><a href="#Data">Data</a></li>
+        <li><a href="#DataAnalysing">DataAnalysing</a></li>
+        <li><a href="#DataAnalysingAlgorithm">DataAnalysingAlgorithm</a></li>
+        <li><a href="#DataCollection">DataCollection</a></li>
+        <li><a href="#DataCollectionAlgorithm">DataCollectionAlgorithm</a></li>
+        <li><a href="#DataIngestion">DataIngestion</a></li>
+        <li><a href="#DataMining">DataMining</a></li>
+        <li><a href="#DataProcessing">DataProcessing</a></li>
+        <li><a href="#DataProcessingAlgorithm">DataProcessingAlgorithm</a></li>
+        <li><a href="#DataSetClass">DataSetClass</a></li>
+        <li><a href="#DataSink">DataSink</a></li>
+        <li><a href="#DataSinkAlgorithm">DataSinkAlgorithm</a></li>
+        <li><a href="#DataTransform">DataTransform</a></li>
+        <li><a href="#DataType">DataType</a></li>
+        <li><a href="#DiscriminantFunctionModel">DiscriminantFunctionModel</a></li>
+        <li><a href="#DiscriminativeModel">DiscriminativeModel</a></li>
+        <li><a href="#Fastq">Fastq</a></li>
+        <li><a href="#Image">Image</a></li>
+        <li><a href="#Implementation">Implementation</a></li>
+        <li><a href="#Json">Json</a></li>
+        <li><a href="#KNN">KNN</a></li>
+        <li><a href="#KNNPredict">KNNPredict</a></li>
+        <li><a href="#KNNTesting">KNNTesting</a></li>
+        <li><a href="#KNearestNeighborModel">KNearestNeighborModel</a></li>
+        <li><a href="#MachineLearning">MachineLearning</a></li>
+        <li><a href="#MachineLearningAlgorithm">MachineLearningAlgorithm</a></li>
+        <li><a href="#Map">Map</a></li>
+        <li><a href="#ModelingAlgorithm">ModelingAlgorithm</a></li>
+        <li><a href="#NeuralNetworkModel">NeuralNetworkModel</a></li>
+        <li><a href="#Parameter">Parameter</a></li>
+        <li><a href="#PredictingAlgorithm">PredictingAlgorithm</a></li>
+        <li><a href="#PredictiveModel">PredictiveModel</a></li>
+        <li><a href="#PrimitiveType">PrimitiveType</a></li>
+        <li><a href="#Problem">Problem</a></li>
+        <li><a href="#RDF">RDF</a></li>
+        <li><a href="#RF">RF</a></li>
+        <li><a href="#RFPredict">RFPredict</a></li>
+        <li><a href="#RFTesting">RFTesting</a></li>
+        <li><a href="#Rar">Rar</a></li>
+        <li><a href="#RemoveOutlier">RemoveOutlier</a></li>
+        <li><a href="#Row">Row</a></li>
+        <li><a href="#SVM">SVM</a></li>
+        <li><a href="#SVMPredict">SVMPredict</a></li>
+        <li><a href="#SVMTesting">SVMTesting</a></li>
+        <li><a href="#Split">Split</a></li>
+        <li><a href="#SplitShuffle">SplitShuffle</a></li>
+        <li><a href="#StructuredType">StructuredType</a></li>
+        <li><a href="#TabularDataSet">TabularDataSet</a></li>
+        <li><a href="#Task">Task</a></li>
+        <li><a href="#TempFile">TempFile</a></li>
+        <li><a href="#TestingAlgorithm">TestingAlgorithm</a></li>
+        <li><a href="#Text">Text</a></li>
+        <li><a href="#WebService">WebService</a></li>
+        <li><a href="#WebServiceAlgorithm">WebServiceAlgorithm</a></li>
+        <li><a href="#Workflow">Workflow</a></li>
+        <li><a href="#WorkflowTemplate">WorkflowTemplate</a></li>
+        <li><a href="#Zip">Zip</a></li>
+    </ul>
+    <div class="entity class" id="Agent">
+        <h3>Agent<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://purl.org/net/opmv/ns#Agent</code></td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/wasLaunchedBy">wasLaunchedBy</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ClassificationModel">
+        <h3>ClassificationModel<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModel</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#PredictiveModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#PredictiveModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminantFunctionModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminantFunctionModel</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminativeModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminativeModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ClassificationModelingAlgorithm">
+        <h3>ClassificationModelingAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ModelingAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ModelingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/RF">RF</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DTC">DTC</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/KNN">KNN</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ConvNetLSTM">ConvNetLSTM</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/SVM">SVM</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DM-Model">
+        <h3>DM-Model<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DM-Model</code></td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#PredictiveModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#PredictiveModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataSetClass">
+        <h3>DataSetClass<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DataSetClass</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Text">Text</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DiscriminantFunctionModel">
+        <h3>DiscriminantFunctionModel<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminantFunctionModel</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#NeuralNetworkModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#NeuralNetworkModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DiscriminativeModel">
+        <h3>DiscriminativeModel<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminativeModel</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="KNearestNeighborModel">
+        <h3>KNearestNeighborModel<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminativeModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminativeModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/label">label</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/metric">metric</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/n_neighbors">n_neighbors</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/n_jobs">n_jobs</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/weights">weights</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/algorithm">algorithm</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/metric_params">metric_params</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/resource">resource</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/leaf_size">leaf_size</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/p">p</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="MachineLearningAlgorithm">
+        <h3>MachineLearningAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataAnalysingAlgorithm">DataAnalysingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/PredictingAlgorithm">PredictingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TestingAlgorithm">TestingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ModelingAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ModelingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ModelingAlgorithm">
+        <h3>ModelingAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ModelingAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="NeuralNetworkModel">
+        <h3>NeuralNetworkModel<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#NeuralNetworkModel</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminantFunctionModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DiscriminantFunctionModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Parameter">
+        <h3>Parameter<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/instanceParameterOf">instanceParameterOf</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasDataType">hasDataType</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasDefaultValue">hasDefaultValue</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/range">range</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasDataValue">hasDataValue</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/instanceParameterOf">instanceParameterOf</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasParameter">hasParameter</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="PredictiveModel">
+        <h3>PredictiveModel<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#PredictiveModel</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DM-Model">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DM-Model</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModel</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Workflow">
+        <h3>Workflow<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/isCorrectWorkflow">isCorrectWorkflow</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasTask">hasTask</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/correspondsToTemplate">correspondsToTemplate</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/numTask">numTask</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/wasLaunchedBy">wasLaunchedBy</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Algorithm">
+        <h3>Algorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Algorithm</code></td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataCollectionAlgorithm">DataCollectionAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataProcessingAlgorithm">DataProcessingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataAnalysingAlgorithm">DataAnalysingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataSinkAlgorithm">DataSinkAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/solves">solves</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasAlgorithm">hasAlgorithm</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Bin">
+        <h3>Bin<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Bin</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Cell">
+        <h3>Cell<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Cell</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasColumnPosition">hasColumnPosition</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasRowPosition">hasRowPosition</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasCell">hasCell</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Channel">
+        <h3>Channel<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Channel</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    <p>Represents a topic when a workflow is executed, this class is used for annotating the process of execution</p>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/classNameSerialized">classNameSerialized</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasChannelOutput">hasChannelOutput</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ClassificationMetric">
+        <h3>ClassificationMetric<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/ClassificationMetric</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ClassificationPredictingAlgorithm">
+        <h3>ClassificationPredictingAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/ClassificationPredictingAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/PredictingAlgorithm">PredictingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/KNNPredict">KNNPredict</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/SVMPredict">SVMPredict</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DTCPredict">DTCPredict</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ConvNetLSTMPredict">ConvNetLSTMPredict</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/RFPredict">RFPredict</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ClassificationTestingAlgorithm">
+        <h3>ClassificationTestingAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/ClassificationTestingAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TestingAlgorithm">TestingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DTCTesting">DTCTesting</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/SVMTesting">SVMTesting</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/RFTesting">RFTesting</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ConvNetLSTMTesting">ConvNetLSTMTesting</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/KNNTesting">KNNTesting</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Column">
+        <h3>Column<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Column</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasPosition">hasPosition</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasColumnName">hasColumnName</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasDataPrimitiveTypeColumn">hasDataPrimitiveTypeColumn</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/isLabel">isLabel</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasColumn">hasColumn</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Component">
+        <h3>Component<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Component</code></td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataProcessing">DataProcessing</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataCollection">DataCollection</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataSink">DataSink</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataAnalysing">DataAnalysing</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/workflow">workflow</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasAlgorithm">hasAlgorithm</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasImplementation">hasImplementation</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasComponent">hasComponent</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ConvNetLSTM">
+        <h3>ConvNetLSTM<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/ConvNetLSTM</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ConvNetLSTMPredict">
+        <h3>ConvNetLSTMPredict<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/ConvNetLSTMPredict</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationPredictingAlgorithm">ClassificationPredictingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="ConvNetLSTMTesting">
+        <h3>ConvNetLSTMTesting<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/ConvNetLSTMTesting</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationTestingAlgorithm">ClassificationTestingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DTC">
+        <h3>DTC<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DTC</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DTCPredict">
+        <h3>DTCPredict<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DTCPredict</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationPredictingAlgorithm">ClassificationPredictingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DTCTesting">
+        <h3>DTCTesting<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DTCTesting</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationTestingAlgorithm">ClassificationTestingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Data">
+        <h3>Data<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Data</code></td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TempFile">TempFile</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Text">Text</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Fastq">Fastq</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Map">Map</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Rar">Rar</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Json">Json</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Image">Image</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Zip">Zip</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Bin">Bin</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/specifiesInputClass">specifiesInputClass</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/specifiesOutputClass">specifiesOutputClass</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataAnalysing">
+        <h3>DataAnalysing<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataAnalysing</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/MachineLearning">MachineLearning</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataAnalysingAlgorithm">
+        <h3>DataAnalysingAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataAnalysingAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Algorithm">Algorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataCollection">
+        <h3>DataCollection<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataCollection</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataIngestion">DataIngestion</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataCollectionAlgorithm">
+        <h3>DataCollectionAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataCollectionAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Algorithm">Algorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataIngestion">
+        <h3>DataIngestion<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataIngestion</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataCollection">DataCollection</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataMining">
+        <h3>DataMining<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataMining</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/MachineLearning">MachineLearning</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataProcessing">
+        <h3>DataProcessing<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataProcessing</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/WebService">WebService</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataTransform">DataTransform</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/RemoveOutlier">RemoveOutlier</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Split">Split</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataProcessingAlgorithm">
+        <h3>DataProcessingAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataProcessingAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Algorithm">Algorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/WebServiceAlgorithm">WebServiceAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataSink">
+        <h3>DataSink<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataSink</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataSinkAlgorithm">
+        <h3>DataSinkAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataSinkAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Algorithm">Algorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataTransform">
+        <h3>DataTransform<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataTransform</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataProcessing">DataProcessing</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="DataType">
+        <h3>DataType<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/DataType</code></td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/StructuredType">StructuredType</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasDataType">hasDataType</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Fastq">
+        <h3>Fastq<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Fastq</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Image">
+        <h3>Image<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Image</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Implementation">
+        <h3>Implementation<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Implementation</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/className">className</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/module">module</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/implementationLanguage">implementationLanguage</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasImplementation">hasImplementation</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Json">
+        <h3>Json<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Json</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="KNN">
+        <h3>KNN<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/KNN</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="KNNPredict">
+        <h3>KNNPredict<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/KNNPredict</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationPredictingAlgorithm">ClassificationPredictingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="KNNTesting">
+        <h3>KNNTesting<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/KNNTesting</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationTestingAlgorithm">ClassificationTestingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="MachineLearning">
+        <h3>MachineLearning<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/MachineLearning</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataAnalysing">DataAnalysing</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataMining">DataMining</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Map">
+        <h3>Map<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Map</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="PredictingAlgorithm">
+        <h3>PredictingAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/PredictingAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationPredictingAlgorithm">ClassificationPredictingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="PrimitiveType">
+        <h3>PrimitiveType<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataType">DataType</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasDataPrimitiveTypeColumn">hasDataPrimitiveTypeColumn</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Problem">
+        <h3>Problem<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Problem</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasFeature">hasFeature</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/solves">solves</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="RDF">
+        <h3>RDF<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/RDF</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Text">Text</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="RF">
+        <h3>RF<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/RF</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="RFPredict">
+        <h3>RFPredict<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/RFPredict</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationPredictingAlgorithm">ClassificationPredictingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="RFTesting">
+        <h3>RFTesting<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/RFTesting</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationTestingAlgorithm">ClassificationTestingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Rar">
+        <h3>Rar<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Rar</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="RemoveOutlier">
+        <h3>RemoveOutlier<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/RemoveOutlier</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataProcessing">DataProcessing</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Row">
+        <h3>Row<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Row</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasCell">hasCell</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasRow">hasRow</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="SVM">
+        <h3>SVM<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/SVM</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#ClassificationModelingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="SVMPredict">
+        <h3>SVMPredict<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/SVMPredict</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationPredictingAlgorithm">ClassificationPredictingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="SVMTesting">
+        <h3>SVMTesting<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/SVMTesting</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationTestingAlgorithm">ClassificationTestingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Split">
+        <h3>Split<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Split</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataProcessing">DataProcessing</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Restrictions</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/specifiesOutputClass">specifiesOutputClass</a><sup class="sup-op" title="object property">op</sup> <span class="cardinality">exactly</span> 2 <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/SplitShuffle">SplitShuffle</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="SplitShuffle">
+        <h3>SplitShuffle<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/SplitShuffle</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Split">Split</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="StructuredType">
+        <h3>StructuredType<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/StructuredType</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataType">DataType</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="TabularDataSet">
+        <h3>TabularDataSet<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DataSetClass">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DataSetClass</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationMetric">ClassificationMetric</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasHeader">hasHeader</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/commentChar">commentChar</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/numberOfColumns">numberOfColumns</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasRow">hasRow</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/delimiter">delimiter</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/encoding">encoding</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasColumn">hasColumn</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/quoteChar">quoteChar</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/skiprows">skiprows</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/pathTabularDataSet">pathTabularDataSet</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/numberOfLines">numberOfLines</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/escapeChar">escapeChar</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/skipInitialSpace">skipInitialSpace</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/lineDelimiter">lineDelimiter</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/quoting">quoting</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/mapping">mapping</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/strict">strict</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/doubleQuote">doubleQuote</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Task">
+        <h3>Task<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Task</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/startedAt">startedAt</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/order">order</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasComponent">hasComponent</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/endedAt">endedAt</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/connectedTo">connectedTo</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasChannelOutput">hasChannelOutput</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/connectedTo">connectedTo</a><sup class="sup-op" title="object property">op</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasTask">hasTask</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="TempFile">
+        <h3>TempFile<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/TempFile</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="TestingAlgorithm">
+        <h3>TestingAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/TestingAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#MachineLearningAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/ClassificationTestingAlgorithm">ClassificationTestingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Text">
+        <h3>Text<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Text</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>Sub-classes</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DataSetClass">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#DataSetClass</a><sup class="sup-c" title="class">c</sup><br/>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/RDF">RDF</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="WebService">
+        <h3>WebService<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/WebService</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataProcessing">DataProcessing</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="WebServiceAlgorithm">
+        <h3>WebServiceAlgorithm<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/WebServiceAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataProcessingAlgorithm">DataProcessingAlgorithm</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="Zip">
+        <h3>Zip<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/Zip</code></td>
+            </tr>
+            <tr>
+                <th>Super-classes</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity class" id="WorkflowTemplate">
+        <h3>WorkflowTemplate<sup title="class" class="sup-c">c</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.opmw.org/ontology/WorkflowTemplate</code></td>
+            </tr>
+            <tr>
+                <th>In domain of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/hasDocumentation">hasDocumentation</a><sup class="sup-dp" title="datatype property">dp</sup><br/>
+                </td>
+            </tr>
+            <tr>
+                <th>In range of</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/correspondsToTemplate">correspondsToTemplate</a><sup class="sup-op" title="object property">op</sup><br/>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+<section id="objectproperties">
+    <h2>Object Properties <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#connectedTo">connectedTo</a></li>
+        <li><a href="#correspondsToTemplate">correspondsToTemplate</a></li>
+        <li><a href="#hasAlgorithm">hasAlgorithm</a></li>
+        <li><a href="#hasCell">hasCell</a></li>
+        <li><a href="#hasChannelOutput">hasChannelOutput</a></li>
+        <li><a href="#hasColumn">hasColumn</a></li>
+        <li><a href="#hasComponent">hasComponent</a></li>
+        <li><a href="#hasDataPrimitiveTypeColumn">hasDataPrimitiveTypeColumn</a></li>
+        <li><a href="#hasDataType">hasDataType</a></li>
+        <li><a href="#hasImplementation">hasImplementation</a></li>
+        <li><a href="#hasParameter">hasParameter</a></li>
+        <li><a href="#hasRow">hasRow</a></li>
+        <li><a href="#hasTask">hasTask</a></li>
+        <li><a href="#instanceParameterOf">instanceParameterOf</a></li>
+        <li><a href="#solves">solves</a></li>
+        <li><a href="#specifiesInputClass">specifiesInputClass</a></li>
+        <li><a href="#specifiesOutputClass">specifiesOutputClass</a></li>
+        <li><a href="#wasLaunchedBy">wasLaunchedBy</a></li>
+    </ul>
+    <div class="entity property" id="connectedTo">
+        <h3>connectedTo<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/connectedTo</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="correspondsToTemplate">
+        <h3>correspondsToTemplate<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/correspondsToTemplate</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.opmw.org/ontology/WorkflowTemplate">http://www.opmw.org/ontology/WorkflowTemplate</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasAlgorithm">
+        <h3>hasAlgorithm<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasAlgorithm</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Algorithm">Algorithm</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasCell">
+        <h3>hasCell<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasCell</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Row">Row</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Cell">Cell</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasChannelOutput">
+        <h3>hasChannelOutput<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasChannelOutput</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Channel">Channel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasColumn">
+        <h3>hasColumn<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasColumn</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Column">Column</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasComponent">
+        <h3>hasComponent<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasComponent</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasDataPrimitiveTypeColumn">
+        <h3>hasDataPrimitiveTypeColumn<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasDataPrimitiveTypeColumn</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Column">Column</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasDataType">
+        <h3>hasDataType<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasDataType</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/DataType">DataType</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasImplementation">
+        <h3>hasImplementation<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasImplementation</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Implementation">Implementation</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasParameter">
+        <h3>hasParameter<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasParameter</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    (<a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup> or <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>)
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasRow">
+        <h3>hasRow<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasRow</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Row">Row</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasTask">
+        <h3>hasTask<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasTask</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="instanceParameterOf">
+        <h3>instanceParameterOf<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/instanceParameterOf</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="solves">
+        <h3>solves<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/solves</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Algorithm">Algorithm</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Problem">Problem</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="specifiesInputClass">
+        <h3>specifiesInputClass<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/specifiesInputClass</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    (<a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup> or <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>)
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="specifiesOutputClass">
+        <h3>specifiesOutputClass<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/specifiesOutputClass</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    (<a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup> or <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>)
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Data">Data</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="wasLaunchedBy">
+        <h3>wasLaunchedBy<sup title="object property" class="sup-op">op</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/wasLaunchedBy</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://purl.org/net/opmv/ns#Agent">http://purl.org/net/opmv/ns#Agent</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+<section id="datatypeproperties">
+    <h2>Datatype Properties <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#algorithm">algorithm</a></li>
+        <li><a href="#className">className</a></li>
+        <li><a href="#classNameSerialized">classNameSerialized</a></li>
+        <li><a href="#commentChar">commentChar</a></li>
+        <li><a href="#delimiter">delimiter</a></li>
+        <li><a href="#doubleQuote">doubleQuote</a></li>
+        <li><a href="#encoding">encoding</a></li>
+        <li><a href="#endedAt">endedAt</a></li>
+        <li><a href="#escapeChar">escapeChar</a></li>
+        <li><a href="#hasColumnName">hasColumnName</a></li>
+        <li><a href="#hasColumnPosition">hasColumnPosition</a></li>
+        <li><a href="#hasDataValue">hasDataValue</a></li>
+        <li><a href="#hasDefaultValue">hasDefaultValue</a></li>
+        <li><a href="#hasDocumentation">hasDocumentation</a></li>
+        <li><a href="#hasFeature">hasFeature</a></li>
+        <li><a href="#hasHeader">hasHeader</a></li>
+        <li><a href="#hasName">hasName</a></li>
+        <li><a href="#hasPosition">hasPosition</a></li>
+        <li><a href="#hasRowPosition">hasRowPosition</a></li>
+        <li><a href="#implementationLanguage">implementationLanguage</a></li>
+        <li><a href="#isCorrectWorkflow">isCorrectWorkflow</a></li>
+        <li><a href="#isLabel">isLabel</a></li>
+        <li><a href="#label">label</a></li>
+        <li><a href="#leaf_size">leaf_size</a></li>
+        <li><a href="#lineDelimiter">lineDelimiter</a></li>
+        <li><a href="#mapping">mapping</a></li>
+        <li><a href="#metric">metric</a></li>
+        <li><a href="#metric_params">metric_params</a></li>
+        <li><a href="#module">module</a></li>
+        <li><a href="#n_jobs">n_jobs</a></li>
+        <li><a href="#n_neighbors">n_neighbors</a></li>
+        <li><a href="#numTask">numTask</a></li>
+        <li><a href="#numberOfColumns">numberOfColumns</a></li>
+        <li><a href="#numberOfInputs">numberOfInputs</a></li>
+        <li><a href="#numberOfLines">numberOfLines</a></li>
+        <li><a href="#numberOfOutputs">numberOfOutputs</a></li>
+        <li><a href="#order">order</a></li>
+        <li><a href="#p">p</a></li>
+        <li><a href="#pathTabularDataSet">pathTabularDataSet</a></li>
+        <li><a href="#quoteChar">quoteChar</a></li>
+        <li><a href="#quoting">quoting</a></li>
+        <li><a href="#range">range</a></li>
+        <li><a href="#represents">represents</a></li>
+        <li><a href="#resource">resource</a></li>
+        <li><a href="#skipInitialSpace">skipInitialSpace</a></li>
+        <li><a href="#skiprows">skiprows</a></li>
+        <li><a href="#startedAt">startedAt</a></li>
+        <li><a href="#strict">strict</a></li>
+        <li><a href="#weights">weights</a></li>
+        <li><a href="#workflow">workflow</a></li>
+    </ul>
+    <div class="entity property" id="algorithm">
+        <h3>algorithm<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/algorithm</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="className">
+        <h3>className<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/className</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Implementation">Implementation</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="classNameSerialized">
+        <h3>classNameSerialized<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/classNameSerialized</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Channel">Channel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="commentChar">
+        <h3>commentChar<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/commentChar</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="delimiter">
+        <h3>delimiter<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/delimiter</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="doubleQuote">
+        <h3>doubleQuote<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/doubleQuote</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="encoding">
+        <h3>encoding<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/encoding</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="endedAt">
+        <h3>endedAt<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/endedAt</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The time at which an activity ended. See also prov:startedAtTime.
+http://www.w3.org/ns/prov#endedAtTime
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#dateTime">xsd:dateTime</a><sup class="sup-c" title="class">c</sup>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="escapeChar">
+        <h3>escapeChar<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/escapeChar</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasColumnName">
+        <h3>hasColumnName<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasColumnName</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Column">Column</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasColumnPosition">
+        <h3>hasColumnPosition<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasColumnPosition</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Cell">Cell</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasDataValue">
+        <h3>hasDataValue<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasDataValue</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasDefaultValue">
+        <h3>hasDefaultValue<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasDefaultValue</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasDocumentation">
+        <h3>hasDocumentation<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasDocumentation</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    Property that binds a workflow template to its documentation.
+
+http://www.opmw.org/ontology/hasDocumentation
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.opmw.org/ontology/WorkflowTemplate">http://www.opmw.org/ontology/WorkflowTemplate</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#anyURI">xsd:anyURI</a><sup class="sup-c" title="class">c</sup>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasFeature">
+        <h3>hasFeature<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasFeature</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Problem">Problem</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasHeader">
+        <h3>hasHeader<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasHeader</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasName">
+        <h3>hasName<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasName</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2002/07/owl#Thing">owl:Thing</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasPosition">
+        <h3>hasPosition<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasPosition</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Column">Column</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="hasRowPosition">
+        <h3>hasRowPosition<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/hasRowPosition</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Cell">Cell</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="implementationLanguage">
+        <h3>implementationLanguage<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/implementationLanguage</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Implementation">Implementation</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="isCorrectWorkflow">
+        <h3>isCorrectWorkflow<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/isCorrectWorkflow</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="isLabel">
+        <h3>isLabel<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/isLabel</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Column">Column</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="label">
+        <h3>label<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/label</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="leaf_size">
+        <h3>leaf_size<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/leaf_size</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="lineDelimiter">
+        <h3>lineDelimiter<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/lineDelimiter</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="mapping">
+        <h3>mapping<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/mapping</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="metric">
+        <h3>metric<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/metric</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="metric_params">
+        <h3>metric_params<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/metric_params</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="module">
+        <h3>module<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/module</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Implementation">Implementation</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="n_jobs">
+        <h3>n_jobs<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/n_jobs</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="n_neighbors">
+        <h3>n_neighbors<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/n_neighbors</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numTask">
+        <h3>numTask<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/numTask</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Workflow</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numberOfColumns">
+        <h3>numberOfColumns<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/numberOfColumns</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numberOfInputs">
+        <h3>numberOfInputs<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/numberOfInputs</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    (<a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup> or <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>)
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numberOfLines">
+        <h3>numberOfLines<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/numberOfLines</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="numberOfOutputs">
+        <h3>numberOfOutputs<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/numberOfOutputs</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    (<a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup> or <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>)
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="order">
+        <h3>order<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/order</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="p">
+        <h3>p<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/p</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="pathTabularDataSet">
+        <h3>pathTabularDataSet<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/pathTabularDataSet</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="quoteChar">
+        <h3>quoteChar<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/quoteChar</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="quoting">
+        <h3>quoting<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/quoting</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="range">
+        <h3>range<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/range</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#Parameter</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="represents">
+        <h3>represents<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/represents</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2002/07/owl#Thing">owl:Thing</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="resource">
+        <h3>resource<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/resource</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="skipInitialSpace">
+        <h3>skipInitialSpace<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/skipInitialSpace</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="skiprows">
+        <h3>skiprows<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/skiprows</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#int">xsd:int</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="startedAt">
+        <h3>startedAt<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/startedAt</code></td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>
+                    The time at which an activity started. See also prov:endedAtTime.
+
+http://www.w3.org/ns/prov#startedAtTime
+                </td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Task">Task</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#dateTime">xsd:dateTime</a><sup class="sup-c" title="class">c</sup>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="strict">
+        <h3>strict<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/strict</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/TabularDataSet">TabularDataSet</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#boolean">xsd:boolean</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="weights">
+        <h3>weights<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/weights</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel">http://www.e-lico.eu/ontologies/dmo/DMOP/DMOP.owl#KNearestNeighborModel</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="entity property" id="workflow">
+        <h3>workflow<sup title="datatype property" class="sup-dp">dp</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td><code>http://www.ontologies.khaos.uma.es/bigowl/workflow</code></td>
+            </tr>
+            <tr>
+                <th>Domain(s)</th>
+                <td>
+                    <a href="http://www.ontologies.khaos.uma.es/bigowl/Component">Component</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+            <tr>
+                <th>Range(s)</th>
+                <td>
+                    <a href="http://www.w3.org/2001/XMLSchema#string">xsd:string</a><sup class="sup-c" title="class">c</sup>
+                </td>
+            </tr>
+        </table>
+    </div>
+</section>
+
+  
+  <section id="namedindividuals">
+    <h2>Named Individuals <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <ul class="hlist">
+        <li><a href="#Boolean">Boolean</a></li>
+        <li><a href="#Date">Date</a></li>
+        <li><a href="#Double">Double</a></li>
+        <li><a href="#File">File</a></li>
+        <li><a href="#Float">Float</a></li>
+        <li><a href="#Folder">Folder</a></li>
+        <li><a href="#InputColumn">InputColumn</a></li>
+        <li><a href="#Integer">Integer</a></li>
+        <li><a href="#List">List</a></li>
+        <li><a href="#String">String</a></li>
+        <li><a href="#Timestamp">Timestamp</a></li>
+        <li><a href="#Zip">Zip</a></li>
+    </ul>
+    <div class="entity named_individual" id="Boolean">
+        <h3>Boolean<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/Boolean
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="Date">
+        <h3>Date<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/Date
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="Double">
+        <h3>Double<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/Double
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="File">
+        <h3>File<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/File
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/StructuredType">StructuredType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="Float">
+        <h3>Float<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/Float
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="Folder">
+        <h3>Folder<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/Folder
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/StructuredType">StructuredType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="InputColumn">
+        <h3>InputColumn<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/InputColumn
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/StructuredType">StructuredType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="Integer">
+        <h3>Integer<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/Integer
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="List">
+        <h3>List<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/List
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/StructuredType">StructuredType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="String">
+        <h3>String<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/String
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="Timestamp">
+        <h3>Timestamp<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/Timestamp
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/PrimitiveType">PrimitiveType</a><br/>
+            </dd>
+        </table>
+    </div>
+    <div class="entity named_individual" id="Zip">
+        <h3>Zip<sup title="named individual" class="sup-ni">ni</sup></h3>
+        <table>
+            <tr>
+                <th>URI</th>
+                <td>
+                  <code>
+                      http://www.ontologies.khaos.uma.es/bigowl/Zip
+                  
+                  </code>
+                </td>
+            </tr>
+            <dt>Classes(s)</dt>
+            <dd>
+                <a href="http://www.w3.org/2002/07/owl#Class">owl:Class</a><br/>
+                <a href="http://www.w3.org/2000/01/rdf-schema#Class">rdfs:Class</a><br/>
+                <a href="http://www.ontologies.khaos.uma.es/bigowl/StructuredType">StructuredType</a><br/>
+            </dd>
+        </table>
+    </div>
+</section>
+  
+  <section id="namespaces">
+    <h2>Namespaces <span style="float:right; font-size:smaller;"><a href="">&uparrow;</a></span></h2>
+    <dl>
+        <dt>:</dt>
+        <dd><code>http://www.ontologies.khaos.uma.es/bigowl/</code></dd>
+        <dt>dct</dt>
+        <dd><code>http://purl.org/dc/terms/</code></dd>
+        <dt>obda</dt>
+        <dd><code>https://w3id.org/obda/vocabulary#</code></dd>
+        <dt>owl</dt>
+        <dd><code>http://www.w3.org/2002/07/owl#</code></dd>
+        <dt>prov</dt>
+        <dd><code>http://www.w3.org/ns/prov#</code></dd>
+        <dt>rdf</dt>
+        <dd><code>http://www.w3.org/1999/02/22-rdf-syntax-ns#</code></dd>
+        <dt>rdfs</dt>
+        <dd><code>http://www.w3.org/2000/01/rdf-schema#</code></dd>
+        <dt>sdo</dt>
+        <dd><code>https://schema.org/</code></dd>
+        <dt>skos</dt>
+        <dd><code>http://www.w3.org/2004/02/skos/core#</code></dd>
+        <dt>vann</dt>
+        <dd><code>http://purl.org/vocab/vann/</code></dd>
+        <dt>xsd</dt>
+        <dd><code>http://www.w3.org/2001/XMLSchema#</code></dd>
+    </dl>
+</section>
+  <section id="legend">
+      <h2>Legend</h2>
+      <table class="entity">
+          <tr><td><sup class="sup-c" title="Classes">c</sup></td><td>Classes</td></tr>
+          <tr><td><sup class="sup-op" title="Object Properties">op</sup></td><td>Object Properties</td></tr>
+          <tr><td><sup class="sup-fp" title="Functional Properties">fp</sup></td><td>Functional Properties</td></tr>
+          <tr><td><sup class="sup-dp" title="Data Properties">dp</sup></td><td>Data Properties</td></tr>
+          <tr><td><sup class="sup-ap" title="Annotation Properties">dp</sup></td><td>Annotation Properties</td></tr>
+          <tr><td><sup class="sup-p" title="Properties">p</sup></td><td>Properties</td></tr>
+          <tr><td><sup class="sup-ni" title="Named Individuals">ni</sup></td><td>Named Individuals</td></tr>
+      </table>
+  </section>
+</body>
+</html>
